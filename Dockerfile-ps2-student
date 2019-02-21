@@ -1,0 +1,12 @@
+FROM probcomp/metaprob-clojure
+
+USER metaprob
+
+ENV METAPROB_DIR /home/metaprob/projects/metaprob-clojure
+
+WORKDIR $METAPROB_DIR
+
+COPY --chown=metaprob:metaprob ps2-metaprob-basics $METAPROB_DIR/ps2-metaprob-basics
+COPY --chown=metaprob:metaprob resources/m2 /home/metaprob/.m2
+
+CMD ["/bin/bash","-c", "lein jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir ./ps2-metaprob-basics"]
