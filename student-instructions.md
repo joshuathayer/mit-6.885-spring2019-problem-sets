@@ -9,11 +9,11 @@ The first time you run the container you'll have to use a special command. If yo
 The first time you run the container, you'll need to use this special command to download the Docker image and configure how it runs. In your shell, enter the following:
 
     docker run \
-            -it \
-            --name metaprob-ps2 \
-            --publish 8888:8888/tcp \
-            joshuamilesthayer/mit-6.885-spring2019-problem-sets:latest \
-            bash -c "lein jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir ./ps2-metaprob-basics"
+           -it \
+           --name metaprob-ps2 \
+           --publish 8888:8888/tcp \
+           probcomp/mit-6.885-spring2019-pset2-student:latest \
+           bash -c "lein jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir ./ps2-metaprob-basics"
 
 This could take some time as the container downloads. Eventually you should see output that looks like:
 
@@ -21,7 +21,8 @@ This could take some time as the container downloads. Eventually you should see 
         file:///home/metaprob/.local/share/jupyter/runtime/nbserver-46-open.html
     Or copy and paste one of these URLs:
         http://(15e1e9de6303 or 127.0.0.1):8888/?token=0f6e0e8b052c27d1bff730745f12c688b73580a8d658c03c
-Copy the `http://...` URL and paste it in your browser, then edit it to include just the `127.0.0.1` host:
+
+Copy the `http://...` URL and paste it in your browser, then edit it to include just the `127.0.0.1` host. For example:
 
     http://127.0.0.1:8888/?token=0f6e0e8b052c27d1bff730745f12c688b73580a8d658c03c
 
@@ -53,3 +54,7 @@ URL. You should be able to click on `PSet.ipynb` again, and pick up
 where you left off.
 
 Stop the notebook container as above: by using `control-c`.
+
+### Submitting your problem set
+
+XXX TODO

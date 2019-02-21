@@ -1,16 +1,94 @@
-# MIT 6.885 Spring 2019 problem set 2: Metaprob
+# MIT 6.885 Spring 2019 problem sets
 
 This repo contains the elements required for building containers for
 authoring and solving the Metaprob problem set for 6.885
 
 ## Authoring
 
+### Gen
 
+TODO
 
-## Building
+### Metaprob
 
-Currently, `make docker-build` will build the docker image intended for student use. That image can be pushed to DockerHub, where students will be able to download it.
+#### Build your Docker image
+
+Build the metaprob author container with
+
+    make build-metaprob-author
+
+This will build a new Docker image based on a tagged version of the Probcomp Metaprob image.
+
+_Note that until we publish Metaprob images to DockerHub, you'll need to build a specially-tagged Metaprob image on your local machine for these instructions to work. See below for instructions._
+
+#### Starting / restarting your container
+
+Once the image is built, run it in a container with
+
+    make run-metaprob-author
+
+The first time you run this, it may take some time for Clojure dependencies to be resolved. Eventually you should see the familiar output inviting you to visit a Jupyter notebook at a URL including a token:
+
+    To access the notebook, open this file in a browser:
+        file:///home/metaprob/.local/share/jupyter/runtime/nbserver-46-open.html
+    Or copy and paste one of these URLs:
+        http://(15e1e9de6303 or 127.0.0.1):8888/?token=0f6e0e8b052c27d1bff730745f12c688b73580a8d658c03c
+
+As usual, copy the `http://...` URL and paste it in your browser, then edit it to include just the `127.0.0.1` host:
+
+    http://127.0.0.1:8888/?token=0f6e0e8b052c27d1bff730745f12c688b73580a8d658c03c
+
+You should be able to start and edit the `PSet.ipynb` notebook. Be sure to use the Jupyter "save" function to periodically save your work.
+
+The Jupyter notebook is available on the host machine at `ps2-metaprob-basics/PSet.ipynb`. As work progresses on the notebook, it's probably a good idea to commit those changes to git and push to github.
+
+#### Stopping the container
+
+Typing `control-c` in the console where the notebook container is running will stop the container. Any changes that have been made (and saved) to the notebook will persist, since the notebook file is saved on the host machine (at `ps2-metaprob-basics/PSet.ipynb`).
+
+####  Building image for student
+
+The Docker image for student use is different from the image for problem set author use. The image can be built with
+
+    make build-metaprob-student-image
+
+After it's built, you can try working with the image:
+
+* To build the container and start it the first time, use `make run-metaprob-student-image`
+* Subsequent uses of the container should use `make start-metaprob-student-image`.
+* To stop the container, use `control-c`, or `make stop-metaprob-student-image`
+
+When the image is ready for use, it should be pushed to DockerHub.
 
 ## Student instructions
 
 Instructions for the use of the Docker images by students are contained in `student-instructions.md`. Since this repository is private, those instructions should be made available to students via some other channel- either copy/pasted into other student-facing documentation, or made available as a file.
+
+## Notes
+
+### Metaprob versions
+
+The problem sets may want to use a specific version of Metaprob, since `master` is under active development and could introduce breaking changes to the notebooks. Until we determine our release strategy for Metaprob, we can build Metaprob images at a specific git tag. In the metaprob directory, check out the branch, tag, or commit that you'd like to use for the problem set. Then do:
+
+    docker build -t probcomp/metaprob-clojure:`git rev-parse --short HEAD` .
+
+This builds a docker image tagged with the (short) fingerprint of the HEAD of the repo. You should see output like:
+
+    Successfully tagged probcomp/metaprob-clojure:27a241c
+
+Once you've built the image (and, if you expect others to use it, pushed it to DockerHub), edit the first line of `Dockerfile-ps2` *and* `Dockerfile-ps2-student` in this repo to refer to the newly built image:
+
+    FROM probcomp/metaprob-clojure:27a241c
+
+If you change Metaprob versions, you'll very likely want to rebuild your author and student images, too.
+
+_Special note, 20190220_
+
+This repo is currently set up to use a specific Metaprob version (the HEAD of `master` as of today). To build this image, please do the following in the Metaprob source directory:
+
+    git fetch
+    git checkout 27a241c829dc007b7b503209b397437d96314f23
+    docker build -t probcomp/metaprob-clojure:`git rev-parse --short HEAD` .
+    git checkout master
+
+You should not have to edit any other Dockerfiles in order to run the problem set.

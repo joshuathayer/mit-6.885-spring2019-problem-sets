@@ -1,4 +1,4 @@
-FROM probcomp/metaprob-clojure
+FROM probcomp/metaprob-clojure:27a241c
 
 USER metaprob
 
