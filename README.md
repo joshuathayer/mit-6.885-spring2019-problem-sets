@@ -11,6 +11,13 @@ TODO
 
 ### Metaprob
 
+The basic workflow for creating the Metaprob problem set is
+
+* First, you'll create a docker image, which contains metaprob, Jupyter, and other resources
+* You start that image in a container, which will allow you to edit the problem set notebook
+* You can restart the container any time without losing work, if you reboot your machine or otherwise stop the running container
+* You may push changes in the notebook file back to github, so others can follow your work
+
 #### Build your Docker image
 
 Build the metaprob author container with
@@ -40,7 +47,26 @@ As usual, copy the `http://...` URL and paste it in your browser, then edit it t
 
 You should be able to start and edit the `PSet.ipynb` notebook. Be sure to use the Jupyter "save" function to periodically save your work.
 
-The Jupyter notebook is available on the host machine at `ps2-metaprob-basics/PSet.ipynb`. As work progresses on the notebook, it's probably a good idea to commit those changes to git and push to github.
+#### Using git and github
+
+The Jupyter notebook is available on the host machine at `ps2-metaprob-basics/PSet.ipynb`. As work progresses on the notebook, it's probably a good idea to commit changes to that file, and push to github.
+
+So, for example:
+
+    # create a new branch
+    git checkout -b 20190220-joshua-pset-changes
+
+    # run container
+    make run-metaprob-author
+
+    # ... make edits to problem set ...
+
+    # commit changes
+    git add ps2-metaprob-basics/PSet.ipynb
+    git commit -m "made some interesting problems"
+
+    # push to github
+    git push origin 20190220-joshua-pset-changes
 
 #### Stopping the container
 
@@ -59,6 +85,12 @@ After it's built, you can try working with the image:
 * To stop the container, use `control-c`, or `make stop-metaprob-student-image`
 
 When the image is ready for use, it should be pushed to DockerHub.
+
+#### remaining work
+
+[ ] Understand requirements around clearing notebook cells as part of normal repo sanitation- is it as simple as automatically clearing on cells on, say, git commit?
+[ ] Understand requirements around "answer set" vs "problem set": how do they relate? Can the problemset just be the answer set with cleared cells?
+[ ] The student image should contain a process for submitting work
 
 ## Student instructions
 
