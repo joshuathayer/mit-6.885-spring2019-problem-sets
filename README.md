@@ -13,10 +13,11 @@ TODO
 
 The basic workflow for creating the Metaprob problem set is
 
-* First, you'll create a docker image, which contains metaprob, Jupyter, and other resources
+* First, you'll create a Docker image, which contains metaprob, Jupyter, and other resources
 * You start that image in a container, which will allow you to edit the problem set notebook
 * You can restart the container any time without losing work, if you reboot your machine or otherwise stop the running container
 * You may push changes in the notebook file back to github, so others can follow your work
+* Once the problem set is ready, we'll make a Docker image for students to use
 
 #### Build your Docker image
 
@@ -88,9 +89,9 @@ When the image is ready for use, it should be pushed to DockerHub.
 
 #### remaining work
 
-[ ] Understand requirements around clearing notebook cells as part of normal repo sanitation- is it as simple as automatically clearing on cells on, say, git commit?
-[ ] Understand requirements around "answer set" vs "problem set": how do they relate? Can the problemset just be the answer set with cleared cells?
-[ ] The student image should contain a process for submitting work
+- [ ] Understand requirements around clearing notebook cells as part of normal repo sanitation- is it as simple as automatically clearing on cells on, say, git commit?
+- [ ] Understand requirements around "answer set" vs "problem set": how do they relate? Can the problemset just be the answer set with cleared cells?
+- [ ] The student image should contain a process for submitting work
 
 ## Student instructions
 
