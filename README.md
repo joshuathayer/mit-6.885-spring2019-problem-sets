@@ -101,7 +101,7 @@ Instructions for the use of the Docker images by students are contained in `stud
 
 ### Metaprob versions
 
-The problem sets may want to use a specific version of Metaprob, since `master` is under active development and could introduce breaking changes to the notebooks. Until we determine our release strategy for Metaprob, we can build Metaprob images at a specific git tag. In the metaprob directory, check out the branch, tag, or commit that you'd like to use for the problem set. Then do:
+The problem sets may want to use a specific version of Metaprob, since `master` is under active development and could introduce breaking changes to the notebooks. Until we determine our release strategy for Metaprob, we can build Metaprob images at a specific git tag and base our problem sets on those tagged Metaprob images. In the Metaprob directory, check out the branch, tag, or commit that you'd like to use for the problem set. Then do:
 
     docker build -t probcomp/metaprob-clojure:`git rev-parse --short HEAD` .
 
@@ -117,11 +117,11 @@ If you change Metaprob versions, you'll very likely want to rebuild your author 
 
 _Special note, 20190220_
 
-This repo is currently set up to use a specific Metaprob version (the HEAD of `master` as of today). To build this image, please do the following in the Metaprob source directory:
+This repo is currently set up to use a specific Metaprob version (the HEAD of `master` as of today). Since we're not yet publishing Metaprob images to dockerhub, on order to build any of the images or run any containers referenced in this document, you'll need to build this tagged image. Please do the following in the Metaprob source directory:
 
     git fetch
     git checkout 27a241c829dc007b7b503209b397437d96314f23
     docker build -t probcomp/metaprob-clojure:`git rev-parse --short HEAD` .
     git checkout master
 
-You should not have to edit any other Dockerfiles in order to run the problem set.
+After building the image, you should not have to edit any other Dockerfiles in order to run the problem set.
